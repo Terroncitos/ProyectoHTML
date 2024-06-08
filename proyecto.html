@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script>
+    // Autor: Miranda Diaz Soto y Nestor Paredes Casas
+    
+    Array.prototype.calc = function() {
+        var val = this; 
+        
+        if (val.length === 0) {
+            alert("No se ingresaron valores");
+            return;
+        }
+        var suma = 0;
+        var repit = {};
+        var moda = [];
+        var maximo = 0;
+        for (var i = 0; i < val.length; i++) {
+            var num = parseFloat(val[i]);
+            if (!isNaN(num)) {
+                suma += num;
+                repit[num] = (repit[num] || 0) + 1;
+                if (repit[num] > maximo) {
+                    moda = [num];
+                    maximo = repit[num];
+                } else if (repit[num] === maximo && moda.indexOf(num) === -1) {
+                    moda.push(num);
+                }
+            } else {
+                alert("Valor no válido.");
+                i--; 
+            }
+        }
+        var media = suma / val.length;
+        val.sort(function(a, b) { return a - b; });
+        var mediana;
+        var mitad = Math.floor(val.length / 2);
+        if (val.length % 2 === 0) {
+            mediana = (val[mitad - 1] + val[mitad]) / 2;
+        } else {
+            mediana = val[mitad];
+        }
+        moda.sort(function(a, b) { return a - b; }); 
+        alert("Media aritmética: " + media + "\nModa aritmética: " + moda.join(" , ") + "\nMediana: " + mediana);
+    };
+    var val = [];
+    while (true) {
+        var input = prompt("Ingrese un número (o cancelar para terminar):");
+        if (input === null) {
+            break; 
+        }
+        var num = parseFloat(input);
+        if (!isNaN(num)) {
+            val.push(num); 
+        } else {
+            alert("Ingrese un número válido.");
+        }
+    }
+    if (val.length > 0) {
+        val.calc();
+    }
+</script>
+</head>
+<body>
+</body>
+</html>
